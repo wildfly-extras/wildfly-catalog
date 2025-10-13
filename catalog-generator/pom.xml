@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.wildfly.catalog</groupId>
+  <artifactId>wildfly-catalog</artifactId>
+  <version>1.0.0.Final-SNAPSHOT</version>
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.com.fasterxml.jackson>2.18.2</version.com.fasterxml.jackson>
+    <version.org.wildfly.glow>1.5.1.Final</version.org.wildfly.glow>
+    <exec.mainClass>org.wildfly.catalog.Main</exec.mainClass>
+    <wildfly.repo.scm.connection>git@github.com:wildfly-extras/wildfly-catalog.git</wildfly.repo.scm.connection>
+    <wildfly.repo.scm.url>https://github.com/wildfly-extras/wildfly-catalog</wildfly.repo.scm.url>
+  </properties>
+  <name>WildFly catalog generator</name>
+  <description>WildFly catalog generator</description>
+  <url>https://github.com/wildfly-extras/wildfly-catalog</url>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>wildfly.org</id>
+      <name>WildFly Community</name>
+      <organization>wildfly.org</organization>
+      <organizationUrl>https://wildfly.org</organizationUrl>
+    </developer>
+  </developers>
+  <dependencies>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${version.com.fasterxml.jackson}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.wildfly.glow</groupId>
+      <artifactId>wildfly-glow-maven-resolver</artifactId>
+      <version>${version.org.wildfly.glow}</version>
+    </dependency>
+  </dependencies>
+  <scm>
+    <connection>scm:git:${wildfly.repo.scm.connection}</connection>
+    <developerConnection>scm:git:${wildfly.repo.scm.connection}</developerConnection>
+    <url>${wildfly.repo.scm.url}</url>
+    <tag>HEAD</tag>
+  </scm>
+</project>
