@@ -333,13 +333,12 @@ public class Main {
                 categories.put(category, nodes);
             }
             if (nodes.containsKey(layerName)) {
-                // add all dependencies
-                JsonNode overriden = nodes.get(layerName);
-                ArrayNode deps = (ArrayNode) layer.get("dependencies");
-                if (deps != null) {
-                    ArrayNode overridenDeps = (ArrayNode) overriden.get("dependencies");
-                    deps.addAll(overridenDeps);
+                JsonNode l = nodes.get(layerName);
+                if (isSameLayer(layer, l)) {
+                    continue;
                 }
+                layerName += " ( from " + artifactId + " )";
+                layer.put("name", layerName);
             }
             if (layer.has("managementModel")) {
                 navigate(wildscribeTargetDirectory, layer.get("managementModel"));
@@ -349,6 +348,76 @@ public class Main {
             }
             nodes.put(layerName, layer);
         }
+    }
+
+    private static boolean isSameLayer(JsonNode one, JsonNode two) {
+        if (!one.get("name").equals(two.get("name"))) {
+            return false;
+        }
+        if (one.has("dependencies") && two.has("dependencies")) {
+            ArrayNode depsOne = (ArrayNode) one.get("dependencies");
+            ArrayNode depsTwo = (ArrayNode) two.get("dependencies");
+            if (depsOne.size() != depsTwo.size()) {
+                return false;
+            }
+            for (int i = 0; i < depsOne.size(); i++) {
+                JsonNode oneDep = depsOne.get(i);
+                JsonNode twoDep = depsTwo.get(i);
+                String nameOne = oneDep.get("name").asText();
+                String nameTwo = twoDep.get("name").asText();
+                if (!nameOne.equals(nameTwo)) {
+                    return false;
+                }
+            }
+        } else {
+            if (one.has("dependencies") || two.has("dependencies")) {
+                return false;
+            }
+        }
+        if (one.has("packages") && two.has("packages")) {
+            ArrayNode depsOne = (ArrayNode) one.get("packages");
+            ArrayNode depsTwo = (ArrayNode) two.get("packages");
+            if (depsOne.size() != depsTwo.size()) {
+                return false;
+            }
+            for (int i = 0; i < depsOne.size(); i++) {
+                String oneDep = depsOne.get(i).asText();
+                String  twoDep = depsTwo.get(i).asText();
+                if (!oneDep.equals(twoDep)) {
+                    return false;
+                }
+            }
+        } else {
+            if (one.has("packages") || two.has("packages")) {
+                return false;
+            }
+        }
+        if (one.has("glowRules") && two.has("glowRules")) {
+            ArrayNode depsOne = (ArrayNode) one.get("glowRules");
+            ArrayNode depsTwo = (ArrayNode) two.get("glowRules");
+            if (depsOne.size() != depsTwo.size()) {
+                return false;
+            }
+            for (int i = 0; i < depsOne.size(); i++) {
+                JsonNode oneDep = depsOne.get(i);
+                JsonNode twoDep = depsTwo.get(i);
+                String nameOne = oneDep.get("name").asText();
+                String nameTwo = twoDep.get("name").asText();
+                if (!nameOne.equals(nameTwo)) {
+                    return false;
+                }
+                String valueOne = oneDep.get("value").asText();
+                String valueTwo = twoDep.get("value").asText();
+                if (!valueOne.equals(valueTwo)) {
+                    return false;
+                }
+            }
+        } else {
+            if (one.has("glowRules") || two.has("glowRules")) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static boolean isInternalLayer(JsonNode layer) {
