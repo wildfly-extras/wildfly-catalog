@@ -87,6 +87,7 @@ public class Main {
             JsonNode variantNode = variantsIt.next();
             String variantDir = variantNode.get("directory").asText();
             String variantDescription = variantNode.get("description").asText();
+            System.out.println("Generating catalog for variant " + variantDescription);
             ObjectNode target = mapper.createObjectNode();
             target.put("description", variantDescription + " " + wildflyVersion + " " + node.get("description").asText());
             target.set("documentation", node.get("documentation"));
@@ -102,17 +103,23 @@ public class Main {
             ArrayNode featurePacks = mapper.createArrayNode();
             target.set("featurePacks", featurePacks);
             while (it.hasNext()) {
-                ObjectNode fpNode = mapper.createObjectNode();
-                featurePacks.add(fpNode);
                 String fp = it.next().asText();
-                fpNode.put("mavenCoordinates", fp);
                 String[] coords = fp.split(":");
                 String groupId = coords[0];
                 String artifactId = coords[1];
                 String version = coords[2];
-                Path docFile = resolveMavenArtifact(resolver, groupId, artifactId, version, "doc", "zip");
+                Path docFile;
+                try {
+                    docFile = resolveMavenArtifact(resolver, groupId, artifactId, version, "doc", "zip");
+                } catch (Exception ex) {
+                    System.out.println("WARNING: The feature-pack " + fp + " doesn't publish documentation.");
+                    continue;
+                }
+                ObjectNode fpNode = mapper.createObjectNode();
+                featurePacks.add(fpNode);
+                fpNode.put("mavenCoordinates", fp);
                 String directoryName = fpOrder + "_" + (coords[0] + '_' + artifactId);
-                fpOrder+=1;
+                fpOrder += 1;
                 Path fpDirectory = featurePacksTargetDirectory.resolve(directoryName);
                 unzip(docFile, fpDirectory);
                 Path metadataFile = fpDirectory.resolve("doc/META-INF/metadata.json");
