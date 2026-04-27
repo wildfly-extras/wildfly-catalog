@@ -20,8 +20,10 @@ If the WildFly version to release is not already present in the [versions.txt](.
 * `git push upstream main` This will start the catalog deployment.
 * DONE
 
-## Remove the latest beta release
+## Remove the Beta catalog when releasing a new WildFly major
 
-* In case a Beta release is present in docs/index.html
-* Remove the entry (for example remove: `<li><a href="39.0.0.Beta1/index.html">39.0.0.Beta1</a></li>`);
+When releasing a catalog for a new WildFly major release, 
+remove the current Beta release from the `docs/index.html` file. To do so:
+
+* Remove the list entry (for example remove: `<li><a href="39.0.0.Beta1/index.html">39.0.0.Beta1</a></li>`);
 * `git add docs/index.html;git commit -m "Remove latest Beta";git push upstream main`
