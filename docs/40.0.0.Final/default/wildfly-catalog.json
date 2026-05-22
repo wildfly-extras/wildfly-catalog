@@ -77,7 +77,7 @@
     "modelReference" : "featurePacks/4_org.wildfly.extras.graphql_wildfly-microprofile-graphql-feature-pack/doc/reference/index.html",
     "logMessagesReference" : "featurePacks/4_org.wildfly.extras.graphql_wildfly-microprofile-graphql-feature-pack/doc/log-message-reference.html"
   }, {
-    "mavenCoordinates" : "org.wildfly.security.vault:wildfly-vault-feature-pack:1.0.0.CR1",
+    "mavenCoordinates" : "org.wildfly.security.vault:wildfly-vault-feature-pack:1.0.0.Final",
     "name" : "WildFly Vault Feature Pack",
     "description" : "WildFly feature pack for credential stores backed by external vaults",
     "licenses" : [ "Apache License, Version 2.0" ],
@@ -8924,7 +8924,7 @@
       },
       "configurations" : [ ],
       "packages" : [ "org.wildfly.extension.hashicorp-vault" ],
-      "feature-pack" : "org.wildfly.security.vault:wildfly-vault-feature-pack:1.0.0.CR1",
+      "feature-pack" : "org.wildfly.security.vault:wildfly-vault-feature-pack:1.0.0.Final",
       "description" : "Support for HashiCorp Vault",
       "glowAddOn" : "hashicorp-vault",
       "glowDiscoverable" : false

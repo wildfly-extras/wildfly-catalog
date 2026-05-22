@@ -1,7 +1,7 @@
 {
   "groupId" : "org.wildfly.security.vault",
   "artifactId" : "wildfly-vault-feature-pack",
-  "version" : "1.0.0.CR1",
+  "version" : "1.0.0.Final",
   "name" : "WildFly Vault Feature Pack",
   "description" : "WildFly feature pack for credential stores backed by external vaults",
   "licenses" : [ "Apache License, Version 2.0" ],
